@@ -12,7 +12,7 @@ from bot_info import slack_token
 
 
 def safe_string(s):
-    keepcharacters = (' ','.','_')
+    keepcharacters = (' ','.','_','-')
     return "".join(c if c.isalnum() or c in keepcharacters else "_" for c in s ).rstrip()
 
 
@@ -51,7 +51,7 @@ def user_info(data, key):
 
 
 def extrac_bucket_path(path):
-    m = re.search(r"""[/\w\s]*bucket/([/\w\s\.]+)""", path)
+    m = re.search(r"""[/\w\s]*seungmount/([/\w\s\.-]+)""", path)
     if m is None:
         print("Not a unix path, try windows format")
         s = ntpath.splitdrive(path)
