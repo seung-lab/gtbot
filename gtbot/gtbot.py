@@ -11,7 +11,7 @@ from helper import reply, guess_path
 from uploader import upload_dataset
 from downloader import parse_nglink
 from bbox import convert_pt_to_bbox
-from bot_info import slack_token, botid
+from bot_info import slack_token, botid, workspace_path
 from fortunate import Fortunate
 import random
 import wikiquote
@@ -29,11 +29,11 @@ cmd_list = {
 cutout_parameters = {
     'mip': 1,
     'pad': [256,256,4],
-    'prefix': '.'
+    'prefix': os.path.join(workspace_prefix, "test_gtbot")
 }
 
 bbox_parameters = {
-    'dim': [40920,40920,2048]
+    'dim': [2944,2944,111],
     'size_threshold': 8000
 }
 

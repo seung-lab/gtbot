@@ -8,7 +8,7 @@ from slack_sdk import WebClient
 import os
 import re
 import ntpath
-from bot_info import slack_token, oauth_token
+from bot_info import slack_token, oauth_token, workspace_prefix
 
 
 def safe_string(s):
@@ -75,7 +75,7 @@ def create_bucket_url(local_path):
 
 
 def guess_path(path):
-    my_bucket = ".'
+    my_bucket = workspace_prefix
     bucket_path = extrac_bucket_path(path)
     if bucket_path is not None:
         my_path = os.path.join(my_bucket, bucket_path)
