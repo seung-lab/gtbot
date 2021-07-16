@@ -138,7 +138,7 @@ def upload_img(handle, bucket, data, vol_start, vol_stop, metadata):
         layer_type   = 'image',
         data_type    = data_type,
         encoding     = 'raw',
-        resolution   = (4,4,40),
+        resolution   = parameters['voxel_size'],
         voxel_offset = dst_bbox.minpt,
         volume_size  = dst_bbox.size3(),
         chunk_size   = (64,64,8)
@@ -202,7 +202,7 @@ def upload_seg(handle, bucket, data, vol_start, vol_stop, metadata):
         layer_type   = 'segmentation',
         data_type    = 'uint32',
         encoding     = 'raw',
-        resolution   = (4,4,40),
+        resolution   = parameters['voxel_size'],
         voxel_offset = dst_bbox.minpt,
         volume_size  = dst_bbox.size3(),
         mesh         = 'mesh_mip_{}_err_0'.format(mip),
