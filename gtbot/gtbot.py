@@ -34,6 +34,7 @@ cutout_parameters = {
 
 bbox_parameters = {
     'dim': [40920,40920,2048]
+    'size_threshold': 8000
 }
 
 logging.basicConfig(level=logging.INFO)
