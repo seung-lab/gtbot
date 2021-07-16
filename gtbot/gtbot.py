@@ -1,4 +1,6 @@
-import slack
+from slack_bolt import App
+from slack_bolt.adapter.socket_mode import SocketModeHandler
+from slack_sdk import WebClient
 import json
 import string
 import re
@@ -37,6 +39,8 @@ bbox_parameters = {
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 gen=Fortunate("fortune.dat")
+app = App(token=os.environ["SLACK_BOT_TOKEN"])
+
 
 def gen_quote():
     title = wikiquote.random_titles(max_titles=1)[0]
@@ -159,9 +163,9 @@ def process_bbox(payload):
         pass
 
 
-@slack.RTMClient.run_on(event='message')
-def handle_cmd(**payload):
-    d = payload['data']
+@app.event({"type": "message"})
+def handle_cmd(body: dict):
+    d = body['event']
     logger.debug(d)
     if relevant_msg(d):
         cmd = format_cmd(d['text'])
@@ -192,7 +196,7 @@ def handle_cmd(**payload):
         reply(d, "sorry, I do not understand the message")
 
 def hello_world():
-    client = slack.WebClient(token=slack_token)
+    client = WebClient(token=slack_token)
 
     client.chat_postMessage(
         channel='#seuron-alerts',
@@ -206,9 +210,9 @@ if __name__ == '__main__':
     p_down = mp.Process(target=handle_download, args=(q_down,))
     p_up.start()
     p_down.start()
-    rtmclient = slack.RTMClient(token=slack_token)
+    handler = SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"])
+    handler.start()
     print("starting the bot")
     hello_world()
-    rtmclient.start()
     p_up.join()
     p_down.join()

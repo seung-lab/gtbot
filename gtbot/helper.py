@@ -4,10 +4,10 @@ import urllib
 import requests
 import json
 from collections import OrderedDict
+from slack_sdk import WebClient
 import os
 import re
 import ntpath
-import slack
 from bot_info import slack_token
 
 
@@ -25,7 +25,7 @@ def reply(data, msg, broadcast=False):
         print(data)
         return
 
-    webclient = slack.WebClient(token=slack_token)
+    webclient = WebClient(token=slack_token)
     webclient.chat_postMessage(
         channel=channel_id,
         thread_ts=thread_ts,
@@ -41,7 +41,7 @@ def user_info(data, key):
     except (KeyError, ValueError, IndexError):
         print(data)
         return None
-    webclient = slack.WebClient(token=slack_token)
+    webclient = WebClient(token=slack_token)
     rc = webclient.users_info(user=user)
     try:
         return rc["user"]["profile"][key]
