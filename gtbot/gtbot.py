@@ -11,7 +11,7 @@ from helper import reply, guess_path
 from uploader import upload_dataset
 from downloader import parse_nglink
 from bbox import convert_pt_to_bbox
-from bot_info import slack_token, botid, workspace_path
+from bot_info import slack_token, botid, workspace_prefix
 from fortunate import Fortunate
 import random
 import wikiquote
