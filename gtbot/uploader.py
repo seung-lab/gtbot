@@ -13,6 +13,7 @@ import urllib
 import requests
 import json
 from collections import OrderedDict
+from bot_info import oauth_token
 
 def create_nglink(image_layer, seg_layers, center):
     ng_host = "https://neuromancer-seung-import.appspot.com"
@@ -53,9 +54,11 @@ def create_nglink(image_layer, seg_layers, center):
     )
 
     try:
-    	r = requests.post('https://www.dynamicannotationframework.com/nglstate/post', data=json.dumps(payload))
+        headers = {'Authorization': 'Bearer {}'.format(oauth_token)}
+        r = requests.post('https://globalv1.daf-apis.com/nglstate/post', headers=headers, data=json.dumps(payload))
     except:
         return "neuroglancer link: {}".format(url)
+
     if r.ok:
         link = r.text.strip()
         link = link[1:-1]

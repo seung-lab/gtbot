@@ -2,6 +2,7 @@ import json
 import requests
 import secrets
 from helper import get_ng_payload
+from bot_info import oauth_token
 def convert_pt_to_bbox(handle, url, parameters):
     payload = get_ng_payload(handle, url)
     layers = payload['layers']
@@ -23,7 +24,8 @@ def convert_pt_to_bbox(handle, url, parameters):
                 l['annotations'] += new_bboxes
 
 
-    r = requests.post('https://www.dynamicannotationframework.com/nglstate/post', data=json.dumps(payload))
+    headers = {'Authorization': 'Bearer {}'.format(oauth_token)}
+    r = requests.post('https://globalv1.daf-apis.com/nglstate/post', headers=headers, data=json.dumps(payload))
     link = r.text.strip()
     link = link[1:-1]
 

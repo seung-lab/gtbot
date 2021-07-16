@@ -8,7 +8,7 @@ from slack_sdk import WebClient
 import os
 import re
 import ntpath
-from bot_info import slack_token
+from bot_info import slack_token, oauth_token
 
 
 def safe_string(s):
@@ -96,7 +96,11 @@ def get_ng_payload(handle, url):
         payload = ""
         if len(components.fragment) == 0:
             json_url = components.query.replace('json_url=','')
-            r = requests.get(json_url)
+            if oauth_token:
+                headers = {'Authorization': 'Bearer {}'.format(oauth_token)}
+                r = requests.get(json_url, headers=headers)
+            else:
+                r = requests.get(json_url)
             payload = r.text
         else:
             payload = urllib.parse.unquote(components.fragment)[1:]
