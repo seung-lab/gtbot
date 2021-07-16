@@ -66,7 +66,7 @@ def parse_nglink(handle, url, parameters):
 
 
 def cloudvolume_to_dir(handle, cv_path, output_path, bbox, parameters,
-                       extension='tif', **kwargs):
+                       extension='png', **kwargs):
     """Save bbox from src_path to directory of tifs at dst_path
 
     Args:
