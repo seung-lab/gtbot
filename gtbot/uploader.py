@@ -92,7 +92,11 @@ def upload_dataset(handle, path, bucket, metadata):
     if path.endswith('.h5'):
         data = load_from_omni_h5(path)
     else:
-        data = load_from_dir(path)
+        extensions = ['tif', 'png']
+        for e in extensions:
+            data = load_from_dir(path, extension=e)
+            if data:
+                break
 
     ng_layers = {}
     for k in data:
