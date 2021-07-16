@@ -127,7 +127,7 @@ def handle_upload(q):
             upload_dataset(d, path, bucket, metadata)
         except Exception as e:
             reply(d, "Some error I cannot handle: {}".format(str(e)))
-            pass
+            raise e
 
 
 def handle_download(q):
